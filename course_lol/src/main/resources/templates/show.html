@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>show</title>
+</head>
+<body>
+<h1>Страница пользователя</h1>
+    <div th:each="el: ${user}">
+        <h3 th:text="${el.getLogin()}"></h3>
+        <p th:text="${el.getRole()}"></p>
+        <p th:text="${el.getId()}">aa</p>
+        <a th:href="'/users/' + ${el.id} + '/edit'">Редактировать</a>
+        <form th:action="'/users/' + ${el.id} + '/remove'" method="post">
+            <button type="submit">Удалить</button>
+        </form>
+    </div>
+</body>
+</html>

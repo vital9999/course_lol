@@ -5,9 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<a>aaaa</a>
+<h1>Список пользователей</h1>
+<a>EBANA ZARABOTALA</a>
 <div th:each="el : ${users}">
-    <h3 th:text="${el.getLogin()}"></h3>
+    <a th:href="@{/users/{id}(id=${el.getId()})}" th:text="${el.getLogin()}"></a>
 </div>
+<a href="/users/new">Создать нового пользователя</a>
 </body>
 </html>
