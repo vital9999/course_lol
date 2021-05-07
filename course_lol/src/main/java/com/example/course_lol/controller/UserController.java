@@ -19,6 +19,17 @@ public class UserController {
     public String menu(){
         return "menu";
     }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+    @GetMapping
+    String logUser(@RequestParam String login, @RequestParam String pass){
+        Iterable<User> users = userRepository.findAll();
+        ArrayList<User> user = new ArrayList<>();
+
+        return "users";
+    }
     @GetMapping("/users/{id}")
     public String show(@PathVariable("id") int id, Model model){
         if(!userRepository.existsById(id)){
