@@ -13,6 +13,8 @@ public class User {
     private String login;
     private String password;
     private String role;
+    private boolean plus;
+    private double balance;
 
     public User() {
     }
@@ -21,6 +23,8 @@ public class User {
         this.login = login;
         this.password = password;
         this.role = role;
+        this.plus = false;
+        this.balance = 0;
     }
 
     public String getLogin() {
@@ -53,5 +57,26 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isPlus() {
+        return plus;
+    }
+
+    public void setPlus(boolean plus) {
+        this.plus = plus;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public int checkPass(String login, String pass){
+        if(this.login.equals(login)&&this.password.equals(pass)) return this.getId();
+        else return -1;
     }
 }

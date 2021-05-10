@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="rus" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+<div th:insert="~{header :: copy}"></div>
+
 <h1>Меню</h1>
-  <a href="/login">Управление пользователями</a>
+  <a href="/users">Управление пользователями</a><br/>
+<a href="/music">Управление музыкой</a>
 </body>
 </html>

@@ -12,28 +12,57 @@ import java.util.Optional;
 
 @Controller
 public class UserController {
+    public static int userId;
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/")
     public String menu(){
-        return "menu";
-    }
-    @GetMapping("/login")
-    public String login(){
         return "login";
     }
-    @GetMapping
-    String logUser(@RequestParam String login, @RequestParam String pass){
+    @GetMapping("/main")
+    public String main(Model model){
+        Optional<User> us = userRepository.findById(userId);
+        ArrayList<User> res = new ArrayList<>();
+        us.ifPresent(res::add);
+        model.addAttribute("user", res);
+        return "main";
+    }
+    @GetMapping("/menu")
+    public String menuGet(){
+        return "menu";
+    }
+
+    @PostMapping ("/logUser")
+    String logUser(@RequestParam String login, @RequestParam String pass, Model model){
+        int id;
         Iterable<User> users = userRepository.findAll();
         ArrayList<User> user = new ArrayList<>();
-
-        return "users";
+        user = (ArrayList<User>) users;
+        for(int i = 0;i<user.size();i++){
+            id = user.get(i).checkPass(login, pass);
+            if(id == 1){
+                userId = id;
+                return "redirect:/menu";
+            }
+            else if(id > 1){
+                userId = id;
+                return "redirect:/main";
+            }
+        }
+        return "redirect:/";
+    }
+    @PostMapping("register")
+    String register(@RequestParam String login, @RequestParam String pass){
+        User user = new User(login, pass, "user");
+        userId = user.getId();
+        userRepository.save(user);
+        return "main";
     }
     @GetMapping("/users/{id}")
     public String show(@PathVariable("id") int id, Model model){
         if(!userRepository.existsById(id)){
-            return "redirect:/blog";
+            return "redirect:/users";
         }
         Optional<User> user = userRepository.findById(id);
         ArrayList<User> res = new ArrayList<>();
@@ -81,6 +110,27 @@ public class UserController {
         userRepository.delete(user);
         return "redirect:/users";
     }
+    @GetMapping("/main/addBal/{id}")
+    public String addBal(Model model, @PathVariable("id") int id){
+        Optional<User> user = userRepository.findById(id);
+        ArrayList<User> res = new ArrayList<>();
+        user.ifPresent(res::add);
+        model.addAttribute("user", res);
+        return "editUs";
+    }
+    @PostMapping("/main/addBal/{id}")
+    public String userPosUpdate(@PathVariable("id") int id, @RequestParam String login, @RequestParam String password, @RequestParam double balance){
+        User user = userRepository.findById(id).orElseThrow();
+        user.setRole("user");
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setBalance(balance);
+        if(balance > 5){
+            user.setPlus(true);
+        }
 
+        userRepository.save(user);
+        return "redirect:/main";
+    }
 
 }
