@@ -12,9 +12,6 @@ public class Artist {
     String name;
     int year;
 
-//    @OneToMany(mappedBy = "artist")
-//    private List<Group> group;
-
     public Artist() {
     }
 
@@ -47,11 +44,5 @@ public class Artist {
         this.year = year;
     }
 
-//    public List<Group> getGroup() {
-//        return group;
-//    }
-//
-//    public void setGroup(List<Group> group) {
-//        this.group = group;
-//    }
+
 }

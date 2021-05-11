@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="rus" xmlns:th="http://www.thymeleaf.org">
+<html lang="rus">
 <head>
     <meta charset="UTF-8">
-    <title>menu</title>
+    <title>edit</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 <body>
 <div th:insert="~{header :: copy}"></div>
 
-<h1>Меню</h1>
+<h1>Редактирование</h1>
 <div class="album py-5 bg-light">
     <div class="container">
-
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-<div class="col">
-<a href="/users">Управление пользователями</a><br/>
-<a href="/music">Управление музыкой</a>
+<div th:each="el : ${album}" class="col">
+  <form class="form-inline" method="post">
+    <input type="text" th:value="${el.getName()}" name="" placeholder="name"></br>
+    <input type="number" th:value="${el.getYear()}" name="year" placeholder="year"></br>
+    <button class="btn" type="submit" >Обновить</button>
+  </form>
 </div>
         </div>
     </div>

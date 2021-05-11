@@ -8,20 +8,13 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     String name;
+    private int artist_id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "artist_id")
-//    private Artist artist;
+
     public Group() {
+        artist_id = 1;
     }
 
-//    public Artist getArtist() {
-//        return artist;
-//    }
-//
-//    public void setArtist(Artist artist) {
-//        this.artist = artist;
-//    }
 
     public Group(String name) {
         this.name = name;

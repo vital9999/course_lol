@@ -1,15 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="rus" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>album</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+<div th:insert="~{header :: copy}"></div>
+
 <h1>Список пользователей</h1>
-<a>EBANA ZARABOTALA</a>
-<div th:each="el : ${users}">
-    <a th:href="@{/users/{id}(id=${el.getId()})}" th:text="${el.getLogin()}"></a>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            <ul class="list-group list-group-flush">
+                <div th:each="el : ${users}">
+                    <li class="list-group-item" th:href="@{/users/{id}(id=${el.getId()})}" th:text="${el.getLogin()}"></li>
+                </div>
+            </ul>
+        </div>
+    </div>
+    <a class="btn" href="/users/new">Создать нового пользователя</a>
+
 </div>
-<a href="/users/new">Создать нового пользователя</a>
+</div>
+
+<div th:insert="~{footer :: foot}"></div>
+
 </body>
 </html>

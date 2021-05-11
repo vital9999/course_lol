@@ -1,31 +1,68 @@
 package com.example.course_lol.controller;
 
+import com.example.course_lol.model.Album;
+import com.example.course_lol.model.Song;
 import com.example.course_lol.model.User;
+import com.example.course_lol.model.User_albums;
+import com.example.course_lol.repo.AlbumRepository;
+import com.example.course_lol.repo.SongRepository;
 import com.example.course_lol.repo.UserRepository;
+import com.example.course_lol.repo.User_albumsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class UserController {
     public static int userId;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SongRepository songRepository;
+    @Autowired
+    private AlbumRepository albumRepository;
+    @Autowired
+    private User_albumsRepository user_albumsRepository;
 
     @GetMapping("/")
     public String menu(){
+        //clearAll();
+
+//        Song song1 = new Song("Вы", "альтернатива");
+//        Song song2 = new Song("Мы", "альтернатива");
+//        Song song3 = new Song("Я", "альтернатива");
+//
+//        Album album = new Album("На вырост", 2018);
+//        song1.setAlbum(album);
+//        song2.setAlbum(album);
+//        song3.setAlbum(album);
+//        List<Song> songs = Arrays.asList(song1,song2,song3);
+//        songRepository.saveAll(songs);
+
+
+//        List<Song> songs = Arrays.asList(song1,song2, song3);
+//
+//        album.setSongs(songs);
+//        albumRepository.save(album);
         return "login";
     }
+
+    private void clearAll() {
+        songRepository.deleteAll();
+        albumRepository.deleteAll();
+    }
+
     @GetMapping("/main")
     public String main(Model model){
         Optional<User> us = userRepository.findById(userId);
         ArrayList<User> res = new ArrayList<>();
         us.ifPresent(res::add);
         model.addAttribute("user", res);
+        Iterable<Album> albums = albumRepository.findAll();
+        model.addAttribute("album", albums);
         return "main";
     }
     @GetMapping("/menu")
@@ -132,5 +169,30 @@ public class UserController {
         userRepository.save(user);
         return "redirect:/main";
     }
+    @GetMapping("/music/{id}/addUs")
+    public String view(@PathVariable("id") int id, Model model){
+        if(!albumRepository.existsById(id)){
+            return "redirect:/music";
+        }
+        Optional<Album> albumO = albumRepository.findById(id);
+        Album album = albumO.get();
 
+        User_albums user_albums = new User_albums();
+        user_albums.setAlbum_id(album.getId());
+        user_albums.setUser_id(userId);
+        user_albums.setDate(new Date());
+        user_albumsRepository.save(user_albums);
+        return "redirect:/main";
+    }
+    @GetMapping("/main/viewMy")
+    public String myMusic(Model model){
+        List<User_albums> usal = user_albumsRepository.findAllByUserId(userId);
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i = 0;i< usal.size();i++){
+            list.add(usal.get(i).getAlbum_id());
+        }
+        Iterable<Album> albums = albumRepository.findAllById(list);
+        model.addAttribute("album", albums);
+        return "viewMy";
+    }
 }

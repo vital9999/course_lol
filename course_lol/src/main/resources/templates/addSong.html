@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="rus">
+<head>
+  <meta charset="UTF-8">
+  <title>новая песня</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div th:insert="~{header :: copy}"></div>
+
+<h1>Добавить песню</h1>
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+<div th:each="el : ${album}">
+    <a th:value="${el.getName()}" ></a>
+    <a th:value="${el.getYear()}" ></a>
+
+  <div class="col">
+    <form method="post">
+      <input type="text" name="name" placeholder="name for song"></br>
+      <input type="text"  name="genre" placeholder="genre"></br>
+      <input type="number"  name="min" placeholder="min"></br>
+      <button class="btn" type="submit" >Добавить</button>
+    </form>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+<div th:insert="~{footer :: foot}"></div>
+
+</body>
+</html>

@@ -1,20 +1,24 @@
 package com.example.course_lol.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     String name;
     String genre;
+    private int min;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "album_id", referencedColumnName = "id")
+    private Album album;
 
     public Song() {
     }
+
 
     public Song(String name, String genre) {
         this.name = name;
@@ -44,4 +48,21 @@ public class Song {
     public void setGenre(String genre) {
         this.genre = genre;
     }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
 }
+

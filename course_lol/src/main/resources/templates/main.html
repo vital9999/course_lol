@@ -10,7 +10,7 @@
 <div th:each="el: ${user}" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h5 class="my-0 mr-md-auto font-weight-normal">Myzika</h5>
     <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/music">music</a>
+        <a class="p-2 text-dark" th:href="@{/main/viewMy}">my music</a>
         <a class="p-2 text-dark" href="#">лоол</a>
         <a class="p-2 text-dark" href="#">ver</a>
         <label for="bal">баланс:</label>
@@ -18,8 +18,37 @@
     </nav>
     <a class="btn btn-outline-primary" th:href="'/main/'+ 'addBal/' + ${el.getId()}">Пополнить баланс</a>
 </div>
-<div style="margin: auto">
-    <h1>User</h1>
+<h1>Выбор музыки</h1>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col" th:each="al : ${album}">
+                <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: group" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="40%" y="50%" fill="#eceeef" dy=".3em">Дайте танк</text></svg>
+
+                    <div class="card-body">
+                        <p class="card-text" th:text="${al.getName()}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-secondary" th:href="@{/music/{id}/view(id=${al.getId()})}">Показать</a>
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-secondary" th:href="@{/music/{id}/addUs(id=${al.getId()})}">Добавить</a>
+                            </div>
+                            <small class="text-muted" th:text="${al.getMin()} + ' min'"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
+<div style="margin: auto">
+</div>
+<footer th:insert="~{footer :: foot}"></footer>
+
 </body>
 </html>

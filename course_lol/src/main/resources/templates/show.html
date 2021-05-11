@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="rus" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>show</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+<div th:insert="~{header :: copy}"></div>
+
 <h1>Страница пользователя</h1>
     <div th:each="el: ${user}">
         <h3 th:text="${el.getLogin()}"></h3>
@@ -15,5 +19,7 @@
             <button type="submit">Удалить</button>
         </form>
     </div>
+<div th:insert="~{footer :: foot}"></div>
+
 </body>
 </html>
