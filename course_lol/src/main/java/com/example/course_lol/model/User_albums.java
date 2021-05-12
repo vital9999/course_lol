@@ -18,6 +18,12 @@ public class User_albums {
     public User_albums() {
     }
 
+    public User_albums(int album_id, int userId, Date date) {
+        this.album_id = album_id;
+        this.userId = userId;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }

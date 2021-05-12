@@ -15,8 +15,8 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     <div th:each="el : ${user}">
     <form method="post">
-        <input type="text" th:value="${el.getLogin()}" name="login" placeholder="login"></br>
-        <input type="text" th:value="${el.getPassword()}" name="password" placeholder="password"></br>
+        <input required type="text" th:value="${el.getLogin()}" name="login" placeholder="login"></br>
+        <input required type="text" th:value="${el.getPassword()}" name="password" placeholder="password"></br>
         <button type="submit" >Обновить</button>
     </form>
     </div>

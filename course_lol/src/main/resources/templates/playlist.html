@@ -7,12 +7,17 @@
 
 </head>
 <body>
-<div th:insert="~{header :: copy}"></div>
+<div th:insert="~{header :: main}"></div>
 
 <h1>Плейлист</h1>
 
-
 <div class="col">
+    <div  th:each="us : ${user}">
+    <form th:action="@{/main/{id}/playlist/sort3(id=${us.getId()})}">
+        <input type="number" required min="1" max="10000" name="min">
+        <button class="btn" type="submit">Фильтровать по длительности</button>
+    </form>
+    </div>
     <div th:each="el: ${album}">
         <ul class="list-group list-group-flush">
             <div th:each="song: ${song}">

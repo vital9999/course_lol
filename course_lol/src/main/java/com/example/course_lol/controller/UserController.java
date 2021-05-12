@@ -1,5 +1,7 @@
 package com.example.course_lol.controller;
 
+import com.example.course_lol.config.TxtPrint;
+import com.example.course_lol.config.WriterTemplate;
 import com.example.course_lol.model.Album;
 import com.example.course_lol.model.Song;
 import com.example.course_lol.model.User;
@@ -9,10 +11,16 @@ import com.example.course_lol.repo.SongRepository;
 import com.example.course_lol.repo.UserRepository;
 import com.example.course_lol.repo.User_albumsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -201,6 +209,10 @@ public class UserController {
         }
         Iterable<Album> albums = albumRepository.findAllById(list);
         model.addAttribute("album", albums);
+        Optional<User> us = userRepository.findById(userId);
+        ArrayList<User> res = new ArrayList<>();
+        us.ifPresent(res::add);
+        model.addAttribute("user", res);
         return "viewMy";
     }
     @GetMapping("/main/addBal/{id}/pay")
@@ -228,6 +240,43 @@ public class UserController {
             Iterable<Album> albums = albumRepository.findAllById(list);
             model.addAttribute("album", albums);
             model.addAttribute("song", song);
+            Optional<User> us = userRepository.findById(userId);
+            ArrayList<User> res = new ArrayList<>();
+            us.ifPresent(res::add);
+            model.addAttribute("user", res);
+
+            return "playlist";
+        }
+        else return "redirect:/main";
+    }
+    @GetMapping("/main/{id}/playlist/sort3")
+    public String sort3(Model model, @RequestParam int min, @PathVariable int id){
+        Optional<User> user = userRepository.findById(id);
+        User user1 = user.get();
+        if(user1.isPlus()){
+
+            List<User_albums> usal = user_albumsRepository.findAllByUserId(userId);
+            ArrayList<Integer> list = new ArrayList<>();
+            ArrayList<Song> song = new ArrayList<>();
+            for(int i = 0;i< usal.size();i++){
+                list.add(usal.get(i).getAlbum_id());
+                song.addAll(songRepository.findAllByAlbum_id(usal.get(i).getAlbum_id()));
+
+                //song.addAll(songRepository.sortSong(usal.get(i).getAlbum_id()));
+            }
+            for(int i = 0;i<song.size();i++){
+                if(song.get(i).getMin()!=min){
+                    song.remove(i);
+                    i--;
+                }
+            }
+            Iterable<Album> albums = albumRepository.findAllById(list);
+            model.addAttribute("album", albums);
+            model.addAttribute("song", song);
+            Optional<User> us = userRepository.findById(userId);
+            ArrayList<User> res = new ArrayList<>();
+            us.ifPresent(res::add);
+            model.addAttribute("user", res);
 
             return "playlist";
         }
@@ -235,6 +284,7 @@ public class UserController {
     }
     @GetMapping("/main/{id}/dayPlaylist")
     public String dayPlay(@PathVariable("id") int id, Model model){
+
         List<Song> songs = songRepository.findAll();
 
         if(songs.size() == 0)return "redirect:/";
@@ -250,6 +300,28 @@ public class UserController {
             song2.add(songs.get(t-1));
         }
         model.addAttribute("songs",song2);
+        Optional<User> us = userRepository.findById(userId);
+        ArrayList<User> res = new ArrayList<>();
+        us.ifPresent(res::add);
+        model.addAttribute("user", res);
        return "dayPlaylist";
+    }
+    @GetMapping("/main/{id}/dayPlaylist/save")
+    public String dayPlaySave(@PathVariable("id") int id, Model model){
+
+        List<Album> album1 = albumRepository.findAll();
+        String name = Integer.toString(album1.size()) + " album";
+        Album album = new Album(name, 2021);
+        albumRepository.save(album);
+
+
+        return "redirect:/main";
+    }
+    @GetMapping("/music/print")
+    public String delToday(Model model) throws ParseException, ParserConfigurationException, TransformerException {
+        List<Album> albums = albumRepository.findAll();
+        WriterTemplate writerTemplate = new TxtPrint();
+        writerTemplate.getInfo(albums);
+        return "redirect:/music";
     }
 }

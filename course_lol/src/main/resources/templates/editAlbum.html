@@ -15,8 +15,8 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 <div th:each="el : ${album}" class="col">
   <form class="form-inline" method="post">
-    <input type="text" th:value="${el.getName()}" name="" placeholder="name"></br>
-    <input type="number" th:value="${el.getYear()}" name="year" placeholder="year"></br>
+    <input required type="text" th:value="${el.getName()}" name="" placeholder="name"></br>
+    <input required type="number" th:value="${el.getYear()}" name="year" placeholder="year"></br>
     <button class="btn" type="submit" >Обновить</button>
   </form>
 </div>

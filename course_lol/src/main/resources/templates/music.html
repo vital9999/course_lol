@@ -10,6 +10,8 @@
 <div th:insert="~{header :: copy}"></div>
 
 <h1>Редактирование музыки</h1>
+    <a href="/music/sort1" class="btn" name="b1" id="btnradio1" >Сорт по имени</a>
+    <a href="/music/sort2" class="btn" name="b2" id="btnradio2" >Сорт по году</a>
 
 <div class="album py-5 bg-light">
     <div class="container">
@@ -30,9 +32,11 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <a href="/music/addAl" class="btn">Добавить альбом</a>
     </div>
+        <a th:href="@{/music/print}" class="btn" name="b2"  >Составить отчет</a>
+
 </div>
 <div th:insert="~{footer :: foot}"></div>
 </body>

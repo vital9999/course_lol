@@ -6,14 +6,25 @@
 </head>
 <body>
 <div th:fragment="copy" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-  <h5 class="my-0 mr-md-auto font-weight-normal">Myzika</h5>
+  <a class="my-0 mr-md-auto font-weight-normal" href="/music">
+    <h5 >Myzika</h5>
+  </a>
   <nav class="my-2 my-md-0 mr-md-3">
-    <a class="p-2 text-dark" href="/main">main</a>
-    <a class="p-2 text-dark" href="#">лоол</a>
-    <a class="p-2 text-dark" href="#">ver</a>
-    <a class="p-2 text-dark"  href="#">хахаха</a>
+    <a class="p-2 text-dark" href="/music" >Получить все</a>
   </nav>
-  <a class="btn btn-outline-primary" href="#">Sign up</a>
+  <a class="btn" href="/music/mostPopular">Топ альбом</a>
+</div>
+<div th:fragment="main" th:each="el: ${user}" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+  <a class="my-0 mr-md-auto font-weight-normal" href="/main">
+    <h5 >Myzika</h5>
+  </a>  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" th:href="@{/main/viewMy}">my music</a>
+    <a class="p-2 text-dark" th:href="@{/main/{id}/playlist(id=${el.getId()})}">myPlaylist</a>
+    <a class="p-2 text-dark" th:href="@{/main/{id}/dayPlaylist(id=${el.getId()})}">Плейлист дня</a>
+    <label for="bal">баланс:</label>
+    <a name="bal" class="p-2 text-dark" th:text="${el.getBalance()}"  href="#"></a>
+  </nav>
+  <a class="btn btn-outline-primary" th:href="'/main/'+ 'addBal/' + ${el.getId()}">Пополнить баланс</a>
 </div>
 </body>
 </html>

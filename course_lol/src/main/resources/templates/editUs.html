@@ -7,7 +7,7 @@
 
 </head>
 <body>
-<div th:insert="~{header :: copy}"></div>
+<div th:insert="~{header :: main}"></div>
 
 <h1>Редактирование</h1>
 <div class="album py-5 bg-light">
@@ -15,9 +15,9 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 <div th:each="el : ${user}">
   <form method="post">
-    <input type="text" th:value="${el.getLogin()}" name="login" placeholder="login"></br>
-    <input type="text" th:value="${el.getPassword()}" name="password" placeholder="password"></br>
-      <input type="text" th:value="${el.getBalance()}" name="balance" placeholder="balance"></br>
+    <input required type="text" th:value="${el.getLogin()}" name="login" placeholder="login"></br>
+    <input required type="text" th:value="${el.getPassword()}" name="password" placeholder="password"></br>
+      <input required min="1" type="text" th:value="${el.getBalance()}" name="balance" placeholder="balance"></br>
       <button class="btn" type="submit" >Пополнить</button>
       <a class="btn" th:href="@{/main/addBal/{id}/pay(id=${el.getId()})}">Оплатить подписку</a>
   </form>

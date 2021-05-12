@@ -209,16 +209,16 @@
               <form class="login" action="/logUser" method="post">
                 <div class="group"> <label for="user" class="label">Имя пользователя</label> <input  name="login" id="user" type="text" class="input" placeholder="Введите имя">
                 </div>
-                <div class="group"> <label for="pass" class="label">Пароль</label> <input name="pass" id="pass" type="password" class="input" data-type="password" placeholder="Введите пароль"> </div>
-                <div class="group"> <input id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span>Оставаться в сети</label> </div>
+                <div class="group"> <label for="pass" class="label">Пароль</label> <input required name="pass" id="pass" type="password" class="input" data-type="password" placeholder="Введите пароль"> </div>
+                <div class="group"> <input required id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span>Оставаться в сети</label> </div>
                 <div class="group"> <input type="submit" class="button" value="Sign In"> </div>
                 <div class="hr"></div>
               </form>
               <form class="sign-up-form" action="/register" method="post">
                 <div class="group"> <label for="user1" class="label">Имя пользователя</label>
-                  <input name="user" id="user1" type="text" class="input" placeholder="Придумайте имя"> </div>
+                  <input name="user" required id="user1" type="text" class="input" placeholder="Придумайте имя"> </div>
                 <div class="group"> <label for="pass1" class="label">Пароль</label>
-                  <input name="login" id="pass1" type="password" class="input" data-type="password" placeholder="Придумайте пароль"> </div>
+                  <input required name="login" id="pass1" type="password" class="input" data-type="password" placeholder="Придумайте пароль"> </div>
                 <div class="group">
                   <input name="pass" type="submit" class="button" value="Войти"> </div>
                 <div class="hr"></div>

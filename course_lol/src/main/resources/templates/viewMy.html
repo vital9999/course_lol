@@ -7,10 +7,12 @@
 
 </head>
 <body>
-<div th:insert="~{header :: copy}"></div>
+<div th:insert="~{header :: main}"></div>
 
-<h1>Выбор музыки</h1>
-
+<h1>Мои альбомы</h1>
+<div th:each="us: ${user}">
+  <a th:href="@{/main/{id}/dayPlaylist/save(id=${us.getId()})}" class="btn">Новый плейлист</a>
+</div>
 <div class="album py-5 bg-light">
   <div class="container">
 

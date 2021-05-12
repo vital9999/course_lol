@@ -19,9 +19,9 @@
 
   <div class="col">
     <form method="post">
-      <input type="text" name="name" placeholder="name for song"></br>
-      <input type="text"  name="genre" placeholder="genre"></br>
-      <input type="number"  name="min" placeholder="min"></br>
+      <input required type="text" name="name" placeholder="name for song"></br>
+      <input required type="text"  name="genre" placeholder="genre"></br>
+      <input type="number" min="1" name="min"  max="10000" placeholder="min"></br>
       <button class="btn" type="submit" >Добавить</button>
     </form>
   </div>

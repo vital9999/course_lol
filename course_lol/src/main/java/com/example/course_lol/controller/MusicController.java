@@ -3,6 +3,7 @@ package com.example.course_lol.controller;
 import com.example.course_lol.model.*;
 import com.example.course_lol.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +18,16 @@ import java.util.Optional;
 
 @Controller
 public class MusicController {
-//    @Autowired
-//    private ArtistRepository artistRepository;
-//    @Autowired
-//    private GroupRepository groupRepository;
+    @Autowired
+    private ArtistRepository artistRepository;
+    @Autowired
+    private GroupRepository groupRepository;
     @Autowired
     private SongRepository songRepository;
     @Autowired
     private AlbumRepository albumRepository;
+    @Autowired
+    private User_albumsRepository user_albumsRepository;
     @GetMapping("/music")
     public String music(Model model){
         Iterable<Album> albums = albumRepository.findAll();
@@ -101,5 +104,41 @@ public class MusicController {
         albumRepository.delete(album);
         return "redirect:/music";
     }
+    @GetMapping("/music/addAl")
+    public String addAl(){
+
+        return "addAl";
+    }
+    @PostMapping("/music/addAl")
+    public String addAlPost(Model model,@RequestParam String name, @RequestParam int year){
+        Album album = new Album(name, year);
+        albumRepository.save(album);
+        return "main";
+    }
+    @GetMapping("music/mostPopular")
+    public String mostPoplar(Model model){
+        List<Integer> a = user_albumsRepository.countAlbum();
+        int i = 0;
+        if(a.size() >=0)
+         i = a.get(0);
+        Optional<Album> al = albumRepository.findById(i);
+        ArrayList<Album> albums = new ArrayList<>();
+        albums.add(al.get());
+        model.addAttribute("album", albums);
+        return "music";
+    }
+    @GetMapping("music/sort1")
+    public String sort1(Model model){
+        Iterable<Album> albums = albumRepository.findAll(Sort.by("name"));
+        model.addAttribute("album", albums);
+        return "music";
+    }
+    @GetMapping("music/sort2")
+    public String sort2(Model model){
+        Iterable<Album> albums = albumRepository.findAll(Sort.by("year"));
+        model.addAttribute("album", albums);
+        return "music";
+    }
+
 
 }
