@@ -18,14 +18,12 @@
         <button class="btn" type="submit">Фильтровать по длительности</button>
     </form>
     </div>
-    <div th:each="el: ${album}">
         <ul class="list-group list-group-flush">
             <div th:each="song: ${song}">
                 <li class="list-group-item" th:text="${song.getName()} +' '+ ${song.getMin()} + ' min'"></li>
             </div>
         </ul>
 
-    </div>
 </div>
 <div th:insert="~{footer :: foot}"></div>
 

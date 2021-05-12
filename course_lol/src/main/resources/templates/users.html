@@ -16,7 +16,9 @@
 
             <ul class="list-group list-group-flush">
                 <div th:each="el : ${users}">
-                    <li class="list-group-item" th:href="@{/users/{id}(id=${el.getId()})}" th:text="${el.getLogin()}"></li>
+                    <a th:href="@{/users/{id}(id=${el.getId()})}">
+                    <li class="list-group-item"  th:text="${el.getLogin()}"></li>
+                    </a>
                 </div>
             </ul>
         </div>
