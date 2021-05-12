@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
@@ -67,6 +70,7 @@ public class User {
         this.plus = plus;
     }
 
+
     public double getBalance() {
         return balance;
     }
@@ -78,5 +82,16 @@ public class User {
     public int checkPass(String login, String pass){
         if(this.login.equals(login)&&this.password.equals(pass)) return this.getId();
         else return -1;
+    }
+    public boolean pay(int sum){
+        this.balance = this.balance - sum;
+        if(this.balance > 0) {
+            this.plus = true;
+            return true;
+        }
+        else{
+            this.balance = this.balance + sum;
+            return false;
+        }
     }
 }

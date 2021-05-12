@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="rus">
+<head>
+    <meta charset="UTF-8">
+    <title>playlist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div th:insert="~{header :: copy}"></div>
+
+<h1>Плейлист</h1>
+
+
+<div class="col">
+    <div th:each="el: ${album}">
+        <ul class="list-group list-group-flush">
+            <div th:each="song: ${song}">
+                <li class="list-group-item" th:text="${song.getName()} +' '+ ${song.getMin()} + ' min'"></li>
+            </div>
+        </ul>
+
+    </div>
+</div>
+<div th:insert="~{footer :: foot}"></div>
+
+
+
+</body>
+</html>

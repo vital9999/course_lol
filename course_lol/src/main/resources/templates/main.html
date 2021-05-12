@@ -11,8 +11,8 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">Myzika</h5>
     <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" th:href="@{/main/viewMy}">my music</a>
-        <a class="p-2 text-dark" href="#">лоол</a>
-        <a class="p-2 text-dark" href="#">ver</a>
+        <a class="p-2 text-dark" th:href="@{/main/{id}/playlist(id=${el.getId()})}">myPlaylist</a>
+        <a class="p-2 text-dark" th:href="@{/main/{id}/dayPlaylist(id=${el.getId()})}">Плейлист дня</a>
         <label for="bal">баланс:</label>
         <a name="bal" class="p-2 text-dark" th:text="${el.getBalance()}"  href="#"></a>
     </nav>

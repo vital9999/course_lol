@@ -174,6 +174,14 @@ public class UserController {
         if(!albumRepository.existsById(id)){
             return "redirect:/music";
         }
+        List<User_albums> usal = user_albumsRepository.findAllByUserId(userId);
+        for(int i = 0;i<usal.size();i++) {
+            if (usal.get(i).getAlbum_id() == id) {
+                System.out.println("есть такой");
+                return "redirect:/main";
+            }
+        }
+
         Optional<Album> albumO = albumRepository.findById(id);
         Album album = albumO.get();
 
@@ -194,5 +202,54 @@ public class UserController {
         Iterable<Album> albums = albumRepository.findAllById(list);
         model.addAttribute("album", albums);
         return "viewMy";
+    }
+    @GetMapping("/main/addBal/{id}/pay")
+    public String  pay(@PathVariable("id") int id){
+        Optional<User> user = userRepository.findById(id);
+        User user1 = user.get();
+        if(user1.pay(5))
+        userRepository.save(user1);
+        return "redirect:/main";
+    }
+    @GetMapping("/main/{id}/playlist")
+    public String getPlay(@PathVariable("id") int id, Model model){
+
+        Optional<User> user = userRepository.findById(id);
+        User user1 = user.get();
+        if(user1.isPlus()){
+
+            List<User_albums> usal = user_albumsRepository.findAllByUserId(userId);
+            ArrayList<Integer> list = new ArrayList<>();
+            ArrayList<Song> song = new ArrayList<>();
+            for(int i = 0;i< usal.size();i++){
+                list.add(usal.get(i).getAlbum_id());
+                song.addAll(songRepository.findAllByAlbum_id(usal.get(i).getAlbum_id()));
+            }
+            Iterable<Album> albums = albumRepository.findAllById(list);
+            model.addAttribute("album", albums);
+            model.addAttribute("song", song);
+
+            return "playlist";
+        }
+        else return "redirect:/main";
+    }
+    @GetMapping("/main/{id}/dayPlaylist")
+    public String dayPlay(@PathVariable("id") int id, Model model){
+        List<Song> songs = songRepository.findAll();
+
+        if(songs.size() == 0)return "redirect:/";
+        int min = 1;
+        int max = songs.size();
+        int diff = max - min;
+        Random random = new Random();
+        int t;
+        ArrayList<Song> song2 = new ArrayList<>();
+        for(int j = 0;j< songs.size()/2;j++){
+            t = random.nextInt(diff + 1);
+            t += min;
+            song2.add(songs.get(t-1));
+        }
+        model.addAttribute("songs",song2);
+       return "dayPlaylist";
     }
 }
